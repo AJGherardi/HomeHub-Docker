@@ -1,0 +1,35 @@
+version: "3"
+services:
+    mongo:
+        image: mongo:latest
+        command: --configExpand rest
+        ports:
+            - 27017:27017
+        logging:
+            driver: none
+    hub:
+        image: ghcr.io/ajgherardi/hub:0.0.1
+        hostname: "hub"
+        ports:
+            - 8080:8080
+            - 5353:5353
+        volumes:
+            - ./:/app
+        cap_add:
+            - SYS_ADMIN
+            - NET_ADMIN
+        network_mode: "host"
+        devices:
+            - "/dev/bus/usb:/dev/bus/usb"
+        depends_on:
+            - mongo
+    node-red:
+        image: ghcr.io/ajgherardi/node-red:0.0.1
+        ports:
+            - "1880:1880"
+        volumes:
+            - node-red-data:/data
+        depends_on:
+            - hub
+volumes:
+    node-red-data:
