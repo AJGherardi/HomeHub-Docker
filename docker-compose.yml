@@ -2,6 +2,7 @@ version: "2"
 services:
     mongo:
         image: mongo:4.4.1
+        restart: always
         command: --configExpand rest
         ports:
             - 27017:27017
@@ -9,6 +10,7 @@ services:
             driver: none
     hub:
         image: ghcr.io/ajgherardi/hub:latest
+        restart: always
         hostname: "hub"
         ports:
             - 8080:8080
@@ -25,6 +27,7 @@ services:
             - mongo
     node-red:
         image: ghcr.io/ajgherardi/node-red:latest
+        restart: always
         ports:
             - "1880:1880"
         volumes:
