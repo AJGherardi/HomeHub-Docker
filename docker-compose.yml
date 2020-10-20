@@ -15,6 +15,7 @@ services:
         ports:
             - 8080:8080
             - 5353:5353
+            - 2041:2041
         volumes:
             - home-data:/app
         cap_add:
